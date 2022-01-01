@@ -17,6 +17,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @RestController
+
+// Request mapping for class and get/post/.. mapping for methods
 @RequestMapping("/user")
 @CrossOrigin("*")
 public class UserController {
@@ -37,7 +39,10 @@ public class UserController {
 
 
     //creating user
+    // return User or ResponseEntity-> both can be converted to json
     @PostMapping("/")
+    // Api endpoint = /user/ but api request should be of post
+    // Bcs we want to call jackson to convert json to user, use @RequestBody
     public User createUser(@Valid @RequestBody User user) throws Exception {
 
 
@@ -50,6 +55,8 @@ public class UserController {
 
         Role role = new Role();
         role.setRoleId(45L);
+        // I want that the user that is doing form registration should be normal user
+        // admin is created directly from db
         role.setRoleName("NORMAL");
 
         UserRole userRole = new UserRole();

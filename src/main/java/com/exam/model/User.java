@@ -9,12 +9,17 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+// Mark for ORM/JPA with annotation
 @Entity
+// Change table name in database to users
 @Table(name = "users")
 public class User implements UserDetails {
 
+	// Mark primary key
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    
+    // to change properties of this col-->@Column(name="userId",nullable=false)
     private Long id;
     private String username;
     private String password;
@@ -23,11 +28,16 @@ public class User implements UserDetails {
     private String email;
     private String phone;
     private boolean enabled = true;
+    // save image in file system not db
     private String profile;
 
-    //user many roles
-
+    //one user can have many roles -> list or set. Use set since order doesn't matter
+    // 1:n, cascade to all to reduce data inconsistency problem
+    // eager means, when user is fetched from db, its roles should also be fetched
+    // mappedBy if skipped, then one more table will be formed
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    
+    // Json for this role is not needed(to prevent circular dependency)
     @JsonIgnore
     private Set<UserRole> userRoles = new HashSet<>();
 

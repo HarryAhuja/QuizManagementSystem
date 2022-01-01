@@ -10,10 +10,11 @@ import java.util.Set;
 public class Role {
 
     @Id
+    // since roleIds are less, automatic generation is turned off
     private Long roleId;
     private String roleName;
 
-	//when we fetch role, we dont want all users with it
+	//when we fetch role, we dont want all users with it->lazy
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "role")
     private Set<UserRole> userRoles=new HashSet<>();
 

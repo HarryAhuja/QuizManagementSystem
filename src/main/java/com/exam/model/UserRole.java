@@ -9,7 +9,8 @@ public class UserRole {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userRoleId;
 
-    //user
+    //Many user roles can be given to one user(1 : n)
+    // These annotations automatically trigger foreign keys query
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
